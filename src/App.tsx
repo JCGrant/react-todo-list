@@ -1,19 +1,19 @@
 import * as React from 'react';
 import './App.css';
 
-interface TodoOwnProps {
+interface TodoContainerOwnProps {
   onClick: () => void;
 }
 
-interface TodoState {
+interface Todo {
   id: number;
   text: string;
   done: boolean;
 }
 
-type TodoProps = TodoOwnProps & TodoState;
+type TodoContainerProps = TodoContainerOwnProps & Todo;
 
-class Todo extends React.Component<TodoProps> {
+class TodoContainer extends React.Component<TodoContainerProps> {
   render() {
     return (
       <span className={this.props.done ? 'done' : ''} onClick={this.props.onClick}>
@@ -24,7 +24,7 @@ class Todo extends React.Component<TodoProps> {
 }
 
 interface TodoListProps {
-  todos: TodoState[];
+  todos: Todo[];
   onClickTodo: (id: number) => () => void;
   onClickTodoDelete: (id: number) => () => void;
 }
@@ -36,7 +36,7 @@ class TodoList extends React.Component<TodoListProps> {
         {this.props.todos.map((todo) => (
           <tr>
             <td>
-              <Todo
+              <TodoContainer
                 key={todo.id}
                 {...todo}
                 onClick={this.props.onClickTodo(todo.id)}
@@ -53,7 +53,7 @@ class TodoList extends React.Component<TodoListProps> {
 }
 
 interface AppLocalState {
-  todos: TodoState[];
+  todos: Todo[];
   newTodoText: string;
   nextId: number;
 }
